@@ -1,0 +1,6 @@
+.DS_Store
+
+# Prompts, source renders, seam frames, build notes and the review preview —
+# not needed in production, and README.md says explicitly to keep these out
+# of the deploy.
+/build/
