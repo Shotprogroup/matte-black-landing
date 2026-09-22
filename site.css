@@ -4,21 +4,33 @@
    conversion sections that scroll up over the film.
    ========================================================================== */
 
-@font-face { font-family: 'Mont'; src: url('assets/fonts/Mont-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Mont'; src: url('assets/fonts/Mont-SemiBold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
-
+/* Bricolage Grotesque, via Google Fonts (SIL Open Font License 1.1) — see
+   index.html for the <link> tags. Replaces the self-hosted Mont: Mont reads
+   as a stock geometric-sans default at a glance (Joel: "classic AI skip
+   font"), and Bricolage was designed specifically to counter that same
+   "commodified type" sameness while staying legible at body sizes. One
+   variable family for display and body — contrast comes from weight/size/
+   tracking below, not a second face. Mont's files are left in assets/fonts/
+   (harmless, unused) rather than deleted, so this is a one-line revert if
+   the brand's actual current-site font ever needs to come back. */
 :root {
-  --bg: #161616;
-  --bg-2: #1c1c1c;
-  --bg-3: #232323;
+  --bg: #0c0c0c;
+  --bg-2: #121212;
+  --bg-3: #171717;
   --line: rgba(255, 255, 255, .10);
   --line-2: rgba(255, 255, 255, .18);
   --ink: #ececea;
   --ink-2: #a9aaa6;
   --ink-3: #737471;
-  --red: #ff3a2d;
+  /* Was #ff3a2d (flat tech-red). Warm brass/gold instead, pulled from the
+     studio's own photography — the concrete/brick warm neutrals and the
+     reveal scene's hung fabric art — rather than a generic red-on-black
+     accent. The real red neon tube is still in the hero footage itself
+     (that's Matt's actual studio, untouched); this only changes the UI's
+     own accent colour, so the two don't compete. */
+  --accent: #c9a15a;
   --brick: #dad7d1;
-  --font: 'Mont', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+  --font: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
   --gutter: clamp(18px, 5vw, 64px);
   --maxw: 1320px;
   --radius: 14px;
@@ -26,15 +38,15 @@
 
 /* ---- engine theme (unlayered, so it wins over the engine's @layer defaults) ---- */
 :root, .sw-root {
-  --sw-bg: #161616;
+  --sw-bg: #0c0c0c;
   --sw-ink: #ececea;
   --sw-ink-soft: #a9aaa6;
-  --sw-accent: #ff3a2d;
+  --sw-accent: #c9a15a;
   --sw-font-display: var(--font);
   --sw-font-body: var(--font);
 }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { font-family: var(--font); color: var(--ink); background: var(--bg); }
+body { font-family: var(--font); font-weight: 500; color: var(--ink); background: var(--bg); }
 * { box-sizing: border-box; }
 
 .sw-particles, .sw-brand__mark { display: none; }
@@ -49,12 +61,17 @@ body { font-family: var(--font); color: var(--ink); background: var(--bg); }
 .mb-topright { display: flex; align-items: center; gap: 10px; }
 .mb-toplink { color: var(--sw-ink); text-decoration: none; font-size: .88rem; font-weight: 600; padding: 10px 14px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .16); background: rgba(22, 22, 22, .45); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: border-color .25s, background .25s; }
 .mb-toplink:hover { border-color: rgba(255, 255, 255, .4); }
-.sw-topcta { color: #111 !important; background: var(--sw-ink) !important; font-weight: 600; transition: transform .2s, background .25s; }
-.sw-topcta:hover { background: #fff !important; transform: translateY(-1px); }
+/* The one persistently-visible CTA (position: fixed topbar, engine-level —
+   see scrub-engine.js), so it carries the brand accent colour and nothing
+   else on the page competes with it. In-page buttons (.mb-btn, .sw-btn)
+   stay neutral white/ink so this stays the one thing that's "hard to miss",
+   not every button shouting at once. */
+.sw-topcta { color: #171207 !important; background: var(--sw-accent) !important; font-weight: 700; box-shadow: 0 2px 16px color-mix(in srgb, var(--sw-accent) 45%, transparent); transition: transform .2s, background .25s, box-shadow .25s; }
+.sw-topcta:hover { background: color-mix(in srgb, var(--sw-accent) 88%, #fff) !important; transform: translateY(-1px); box-shadow: 0 4px 20px color-mix(in srgb, var(--sw-accent) 55%, transparent); }
 .sw-copy__num { color: var(--sw-ink-soft); }
-.sw-copy__eyebrow { color: var(--sw-accent); font-weight: 600; letter-spacing: .18em; }
-.sw-copy__title { font-weight: 600; letter-spacing: -.02em; line-height: 1.02; text-shadow: 0 2px 30px rgba(0, 0, 0, .55); }
-.sw-copy__body { color: var(--ink-2); font-weight: 400; text-shadow: 0 1px 18px rgba(0, 0, 0, .7); }
+.sw-copy__eyebrow { color: var(--sw-accent); font-weight: 700; letter-spacing: .18em; }
+.sw-copy__title { font-weight: 800; letter-spacing: -.03em; line-height: 1.02; text-shadow: 0 2px 30px rgba(0, 0, 0, .55); }
+.sw-copy__body { color: var(--ink-2); font-weight: 500; text-shadow: 0 1px 18px rgba(0, 0, 0, .7); }
 .sw-copy__tags li { color: var(--sw-ink); background: rgba(22, 22, 22, .55); border-color: rgba(255, 255, 255, .16); font-weight: 400; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
 .sw-btn { font-weight: 600; }
 .sw-btn--primary { color: #111 !important; background: var(--sw-ink) !important; }
@@ -107,9 +124,9 @@ body.mb-past .sw-nav__item.is-active:hover { color: var(--sw-ink); }
 .mb-section { padding: clamp(72px, 9vw, 140px) 0; border-top: 1px solid var(--line); }
 .mb-section--flush { padding-top: clamp(56px, 7vw, 110px); }
 .mb-head { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px clamp(24px, 5vw, 80px); align-items: end; margin-bottom: clamp(36px, 5vw, 64px); }
-.mb-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: .74rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 16px; }
-.mb-eyebrow::before { content: ''; width: 22px; height: 2px; background: var(--red); }
-.mb-h2 { font-size: clamp(2rem, 4.2vw, 3.6rem); font-weight: 600; letter-spacing: -.025em; line-height: 1.02; margin: 0; text-wrap: balance; }
+.mb-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: .74rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 16px; }
+.mb-eyebrow::before { content: ''; width: 22px; height: 2px; background: var(--accent); }
+.mb-h2 { font-size: clamp(2rem, 4.2vw, 3.6rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.02; margin: 0; text-wrap: balance; }
 .mb-lede { font-size: clamp(1.02rem, 1.3vw, 1.2rem); line-height: 1.6; color: var(--ink-2); margin: 0; max-width: 46ch; }
 .mb-lede a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--ink-3); }
 
@@ -118,8 +135,8 @@ body.mb-past .sw-nav__item.is-active:hover { color: var(--sw-ink); }
 .mb-card { position: relative; padding: clamp(24px, 2.6vw, 36px); border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(180deg, var(--bg-3), var(--bg-2)); display: flex; flex-direction: column; gap: 14px; min-height: 340px; overflow: hidden; transition: border-color .3s, transform .3s; }
 .mb-card:hover { border-color: var(--line-2); transform: translateY(-2px); }
 .mb-card__num { font-size: .74rem; letter-spacing: .18em; color: var(--ink-3); font-weight: 600; }
-.mb-card__title { font-size: clamp(1.35rem, 1.8vw, 1.7rem); font-weight: 600; letter-spacing: -.015em; margin: 6px 0 0; line-height: 1.1; }
-.mb-card__sub { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--red); font-weight: 600; }
+.mb-card__title { font-size: clamp(1.35rem, 1.8vw, 1.7rem); font-weight: 700; letter-spacing: -.02em; margin: 6px 0 0; line-height: 1.1; }
+.mb-card__sub { font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
 .mb-card__body { color: var(--ink-2); line-height: 1.6; margin: 0; font-size: 1rem; }
 .mb-card__list { list-style: none; margin: auto 0 0; padding: 18px 0 0; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px; }
 .mb-card__list li { font-size: .82rem; color: var(--ink); padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line-2); }
@@ -147,8 +164,8 @@ body.mb-past .sw-nav__item.is-active:hover { color: var(--sw-ink); }
 /* process */
 .mb-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; counter-reset: step; }
 .mb-step { position: relative; padding: 28px 26px 30px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-2); }
-.mb-step::before { counter-increment: step; content: '0' counter(step); display: block; font-size: .78rem; letter-spacing: .18em; color: var(--red); font-weight: 600; margin-bottom: 30px; }
-.mb-step h3 { margin: 0 0 10px; font-size: 1.2rem; font-weight: 600; letter-spacing: -.01em; }
+.mb-step::before { counter-increment: step; content: '0' counter(step); display: block; font-size: .78rem; letter-spacing: .18em; color: var(--accent); font-weight: 600; margin-bottom: 30px; }
+.mb-step h3 { margin: 0 0 10px; font-size: 1.2rem; font-weight: 700; letter-spacing: -.015em; }
 .mb-step p { margin: 0; color: var(--ink-2); line-height: 1.6; font-size: .98rem; }
 .mb-step__line { position: absolute; top: 40px; right: -14px; width: 14px; height: 1px; background: var(--line-2); }
 .mb-step:last-child .mb-step__line { display: none; }
@@ -174,23 +191,23 @@ body.mb-past .sw-nav__item.is-active:hover { color: var(--sw-ink); }
 .mb-faq { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
 .mb-faq__list { border-top: 1px solid var(--line); }
 .mb-faq details { border-bottom: 1px solid var(--line); }
-.mb-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 0; font-size: clamp(1.02rem, 1.3vw, 1.18rem); font-weight: 600; letter-spacing: -.01em; }
+.mb-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 0; font-size: clamp(1.02rem, 1.3vw, 1.18rem); font-weight: 700; letter-spacing: -.015em; }
 .mb-faq summary::-webkit-details-marker { display: none; }
 .mb-faq summary i { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line-2); position: relative; transition: transform .3s, border-color .3s; }
 .mb-faq summary i::before, .mb-faq summary i::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; background: var(--ink); transform: translate(-50%, -50%); }
 .mb-faq summary i::after { transform: translate(-50%, -50%) rotate(90deg); }
-.mb-faq details[open] summary i { transform: rotate(45deg); border-color: var(--red); }
+.mb-faq details[open] summary i { transform: rotate(45deg); border-color: var(--accent); }
 .mb-faq details p { margin: -6px 0 24px; color: var(--ink-2); line-height: 1.65; max-width: 60ch; }
 
 /* contact */
 .mb-contact { position: relative; overflow: hidden; border-radius: 22px; border: 1px solid var(--line); background: radial-gradient(80% 120% at 10% 0%, rgba(255, 58, 45, .14), transparent 55%), linear-gradient(180deg, var(--bg-3), var(--bg-2)); padding: clamp(36px, 6vw, 88px) clamp(24px, 5vw, 80px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 4vw, 60px); align-items: center; }
 .mb-contact .mb-h2 { font-size: clamp(2.2rem, 5vw, 4.4rem); }
-.mb-contact__mail { display: inline-block; margin-top: 22px; font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 600; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--red); padding-bottom: 4px; letter-spacing: -.01em; word-break: break-all; }
+.mb-contact__mail { display: inline-block; margin-top: 22px; font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 600; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 4px; letter-spacing: -.01em; word-break: break-all; }
 .mb-contact__mail:hover { color: #fff; }
 .mb-contact__aside { border-left: 1px solid var(--line-2); padding-left: clamp(20px, 3vw, 40px); }
 .mb-contact__aside h3 { margin: 0 0 14px; font-size: .78rem; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); font-weight: 600; }
 .mb-contact__aside ol { margin: 0; padding-left: 18px; color: var(--ink-2); line-height: 1.7; }
-.mb-contact__aside ol li::marker { color: var(--red); font-weight: 600; }
+.mb-contact__aside ol li::marker { color: var(--accent); font-weight: 600; }
 .mb-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .mb-btn { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: .98rem; padding: 15px 26px; border-radius: 999px; transition: transform .2s, background .25s, border-color .25s; }
 .mb-btn--primary { color: #111; background: var(--ink); }
@@ -206,11 +223,11 @@ body.mb-past .sw-nav__item.is-active:hover { color: var(--sw-ink); }
 .mb-footer__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 28px; font-size: .86rem; color: var(--ink-2); }
 .mb-footer__nav { display: flex; flex-wrap: wrap; gap: 6px 22px; }
 .mb-footer__nav a, .mb-footer__row a { color: var(--ink); text-decoration: none; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; font-size: .78rem; }
-.mb-footer__nav a:hover, .mb-footer__row a:hover { color: var(--red); }
+.mb-footer__nav a:hover, .mb-footer__row a:hover { color: var(--accent); }
 
 
 /* keyboard focus */
-a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
 /* ---- responsive ---- */
 @media (max-width: 1100px) {
