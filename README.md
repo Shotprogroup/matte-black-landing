@@ -28,6 +28,14 @@ loaded progressively as the visitor scrolls.
 
 ## Before going live
 
-- Set the `og:image` and JSON-LD `image` / `url` to the final absolute URLs.
+- ~~Set the `og:image` and JSON-LD `image` / `url` to the final absolute URLs.~~ Done —
+  `og:image`/`og:url` and the JSON-LD block both point at `https://www.matteblackstudio.com/`.
 - The nav and footer link to the existing `/wrap`, `/art`, `/shop` and `/contact` pages.
-- Excluding `build/` from the deploy keeps the upload small.
+- Excluding `build/` from the deploy keeps the upload small (`.gitignore` already does this).
+- Mobile hero: still centre-cropping the desktop 16:9 film rather than a native 9:16 render
+  (needs a go from Joel/Matt — see build/BUILD-NOTES.md). As a stopgap, the "design" and
+  "result" scenes get a per-scene horizontal crop bias on narrow viewports (site.css) so the
+  car stays in frame instead of a flat centre-crop; "arrive" and "craft" were already centred
+  on their subject.
+- Recent-work photography is Matt's own, pulled from the live matteblackstudio.com/wrap
+  gallery (verified against it 2026-09-22) — no stock used.

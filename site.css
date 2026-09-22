@@ -64,6 +64,21 @@ body { font-family: var(--font); color: var(--ink); background: var(--bg); }
 .sw-hint { color: var(--sw-ink-soft); }
 .sw-hint i { border-color: rgba(255, 255, 255, .28); }
 .sw-scene__video, .sw-scene__still { object-position: center 50%; }
+
+/* Mobile crop bias — cheap fix short of a native 9:16 render (see README).
+   Phones get the same 16:9 desktop film, centre-cropped, and a flat centre
+   point puts the car out of frame in two of the four scenes: "design" has it
+   on the right of a wall-mounted print, "result" has it right of a sculpture
+   plinth. Nudging just those two horizontally keeps the car in frame; the
+   other two scenes are already centred on their subject. Scene order is
+   fixed by site.js's empty `connectors: []` (no connector segments get
+   interleaved, so nth-of-type 1–4 is exactly arrive/design/craft/reveal). */
+@media (max-width: 860px) {
+  .sw-stage .sw-scene:nth-of-type(2) .sw-scene__video,
+  .sw-stage .sw-scene:nth-of-type(2) .sw-scene__still { object-position: 64% 50%; }
+  .sw-stage .sw-scene:nth-of-type(4) .sw-scene__video,
+  .sw-stage .sw-scene:nth-of-type(4) .sw-scene__still { object-position: 68% 50%; }
+}
 .sw-copylayer::before { width: min(62vw, 860px); background: linear-gradient(90deg, rgba(22, 22, 22, .92) 0%, rgba(22, 22, 22, .72) 34%, rgba(22, 22, 22, .32) 64%, transparent 100%); }
 /* Once the film is over, its chrome steps aside for the page below. */
 .sw-route, .sw-hint, .sw-scrollbar { transition: opacity .35s; }
