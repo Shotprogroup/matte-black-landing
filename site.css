@@ -83,16 +83,18 @@ body { font-family: var(--font); font-weight: 500; color: var(--ink); background
 .sw-scene__video, .sw-scene__still { object-position: center 50%; }
 
 /* Mobile crop bias — cheap fix short of a native 9:16 render (see README).
-   Phones get the same 16:9 desktop film, centre-cropped, and a flat centre
-   point puts the car out of frame in two of the four scenes: "design" has it
-   on the right of a wall-mounted print, "result" has it right of a sculpture
-   plinth. Nudging just those two horizontally keeps the car in frame; the
-   other two scenes are already centred on their subject. Scene order is
-   fixed by site.js's empty `connectors: []` (no connector segments get
-   interleaved, so nth-of-type 1–4 is exactly arrive/design/craft/reveal). */
+   Phones get the same 16:9 desktop film, centre-cropped. Originally this had
+   a bias on both "design" and "result" for the AI-rendered hero (2026-09-22
+   daytime). "result" (reveal.mp4) is untouched by the 2026-09-22 evening
+   real-footage swap, so its bias is still valid. "design" is now entirely
+   different footage (a corridor/roller-door interior, not a car beside a
+   wall photo) — the old 64% right-bias pointed at blank mezzanine wall and
+   pushed the actual corridor off the left edge, so it's reverted to centre
+   here, same as "arrive" and "craft" (both already centred on their new
+   subject too). Scene order is fixed by site.js's empty `connectors: []`
+   (no connector segments interleaved, so nth-of-type 1–4 is exactly
+   arrive/design/craft/reveal). */
 @media (max-width: 860px) {
-  .sw-stage .sw-scene:nth-of-type(2) .sw-scene__video,
-  .sw-stage .sw-scene:nth-of-type(2) .sw-scene__still { object-position: 64% 50%; }
   .sw-stage .sw-scene:nth-of-type(4) .sw-scene__video,
   .sw-stage .sw-scene:nth-of-type(4) .sw-scene__still { object-position: 68% 50%; }
 }
