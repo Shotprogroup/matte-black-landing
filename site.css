@@ -83,21 +83,18 @@ body { font-family: var(--font); font-weight: 500; color: var(--ink); background
 .sw-scene__video, .sw-scene__still { object-position: center 50%; }
 
 /* Mobile crop bias — cheap fix short of a native 9:16 render (see README).
-   Phones get the same 16:9 desktop film, centre-cropped. Originally this had
-   a bias on both "design" and "result" for the AI-rendered hero (2026-09-22
-   daytime). "result" (reveal.mp4) is untouched by the 2026-09-22 evening
-   real-footage swap, so its bias is still valid. "design" is now entirely
-   different footage (a corridor/roller-door interior, not a car beside a
-   wall photo) — the old 64% right-bias pointed at blank mezzanine wall and
-   pushed the actual corridor off the left edge, so it's reverted to centre
-   here, same as "arrive" and "craft" (both already centred on their new
-   subject too). Scene order is fixed by site.js's empty `connectors: []`
-   (no connector segments interleaved, so nth-of-type 1–4 is exactly
-   arrive/design/craft/reveal). */
-@media (max-width: 860px) {
-  .sw-stage .sw-scene:nth-of-type(4) .sw-scene__video,
-  .sw-stage .sw-scene:nth-of-type(4) .sw-scene__still { object-position: 68% 50%; }
-}
+   Phones get the same 16:9 desktop film, centre-cropped. This used to carry
+   a bias on both "design" and "result", tuned for the original AI-rendered
+   hero. Both scenes are now real footage of entirely different content, so
+   neither old bias means anything any more — "design" was fixed earlier
+   2026-09-22 (reverted to centre once the corridor footage landed), and
+   "result" is fixed here for the same reason: its old 68% right-bias was
+   tuned for a Lamborghini beside a sculpture plinth, not this scene (an
+   orbit around a Porsche, sign upper-right at the start, car filling the
+   frame edge-to-edge by the second half regardless of crop point). All four
+   scenes are centred for now. Scene order is fixed by site.js's empty
+   `connectors: []` (no connector segments interleaved, so nth-of-type 1–4
+   is exactly arrive/design/craft/reveal). */
 .sw-copylayer::before { width: min(62vw, 860px); background: linear-gradient(90deg, rgba(22, 22, 22, .92) 0%, rgba(22, 22, 22, .72) 34%, rgba(22, 22, 22, .32) 64%, transparent 100%); }
 /* Once the film is over, its chrome steps aside for the page below. */
 .sw-route, .sw-hint, .sw-scrollbar { transition: opacity .35s; }
