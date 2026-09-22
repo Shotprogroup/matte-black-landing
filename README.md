@@ -1,9 +1,9 @@
 # Matte Black Studio — landing page
 
-A static landing page for matteblackstudio.com. The hero is a scroll-driven film: four short
-clips generated from Joel's own photos of Matt's real studio (arrive/design/install/result),
-scrubbed by scroll (the `lets-scroll` engine). Below it: services, recent work, process, the
-studio, FAQ and contact.
+A static landing page for matteblackstudio.com. The hero is a scroll-driven film: four
+AI-rendered scenes of the studio joined into one continuous camera move, scrubbed by scroll
+(the `lets-scroll` engine). Below it: services, recent work, process, the studio, FAQ and
+contact.
 
 ## Files
 
@@ -33,18 +33,18 @@ loaded progressively as the visitor scrolls.
 - The nav and footer link to the existing `/wrap`, `/art`, `/shop` and `/contact` pages.
 - Excluding `build/` from the deploy keeps the upload small (`.gitignore` already does this).
 - Mobile hero: still centre-cropping the desktop 16:9 film rather than a native 9:16 render.
-  All four scenes are plain-centred on narrow viewports for now (site.css) — the mobile crop
-  biases from the original AI-rendered hero were tuned for content that no longer exists in
-  any scene, so they were removed rather than guessed at again; a real per-scene bias could be
-  re-added later once someone's actually watched each new scene scrub on a phone.
+  As a stopgap, the "design" and "result" scenes get a per-scene horizontal crop bias on
+  narrow viewports (site.css) so the car stays in frame instead of a flat centre-crop;
+  "arrive" and "craft" are already centred on their subject.
 - Recent-work photography is Matt's own, pulled from the live matteblackstudio.com/wrap
   gallery (verified against it 2026-09-22) — no stock used.
-- Hero footage (2026-09-22 evening): all four scenes (arrive/design/install/result) are real
-  photos of Matt's studio, generated as short (2.4–5s) clips and encoded to match the original
-  recipe (native res, light unsharp, libx264 crf 20, GOP 8 desktop / 720p GOP 4 mobile,
-  faststart, no audio). The four original AI renders are not deleted from the repo, only from
-  HEAD; `git log -- assets/vid` finds them. Seam PSNR between consecutive legs is low
-  (6.5–9dB, see git history for exact numbers) because these are genuinely different real
-  photographs, not a continuous AI camera move — that comparison from the original build
-  doesn't apply here; the crossfade dissolve (site.js `crossfade`) is doing a stylistic
-  transition, not matching frames.
+- Hero footage: this is the original AI-rendered hero (four scenes, one continuous camera
+  move — see build/BUILD-NOTES.md for how it was built). On 2026-09-22 all four scenes were
+  briefly replaced with real photos of Matt's studio, generated as short clips and QC'd
+  (ffprobe + full-clip luma pass + frame-by-frame lettering/artefact checks — see git log for
+  that day's commits). Joel's call after seeing it live: the AI-rendered hero read better, so
+  it's back. The real-footage clips are not deleted, just no longer used — full history in
+  commit `c0e2b60` (`git show c0e2b60 --stat` to see the file list, or check out that commit
+  to pull the mp4s/jpgs back out) if it's wanted again later. Encode recipe, seam-check
+  numbers and the mobile-crop-bias reasoning for that footage are documented in that commit's
+  message.
